@@ -149,7 +149,7 @@ async def getTrendData(
         }
 
         responseTrendData = requests.request(
-            "GET", urlForTrend, headers=headers, data=payloadForBodyDataForTrend)
+            "GET", urlForTrend, headers=headers, json=payloadForBodyDataForTrend)
 
         converted_res_Trend_Data_to_json = responseTrendData.text
 
@@ -221,8 +221,8 @@ def mergeAllFilters(localFilters, globalFilters, mainKpiId):
     globalDimensionValues = globalFilters[mainKpiId]["filterDimensionValues"] if globalFilters and globalFilters[
         mainKpiId] and globalFilters[mainKpiId]["filterDimensionValues"] else []
 
-    for mainFilter, mainFilterIndex in enumerate(globalDimensions):
-        mergeDimensions[mainFilter] = globalDimensionValues[mainFilterIndex]
+    for d in globalDimensions:
+        mergeDimensions[d] = globalDimensionValues[globalDimensions.index(d)]
 
     for d in localFilters:
         if d in mergeDimensions:
